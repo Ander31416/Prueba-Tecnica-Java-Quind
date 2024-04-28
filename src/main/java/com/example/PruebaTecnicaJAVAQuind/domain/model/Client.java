@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,13 +19,7 @@ public class Client {
     private String names;
     private String lastNames;
     private String email;
-    private LocalDateTime birthDate;
+    private Date birthDate;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
-
-    /*
-    id,
-Tipo de identificación, número de identificación, nombres, apellido, correo electrónico,
-fecha de nacimiento, fecha de creación, fecha de modificación.
-     */
 }

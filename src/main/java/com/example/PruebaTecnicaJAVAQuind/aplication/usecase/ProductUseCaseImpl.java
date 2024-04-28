@@ -29,12 +29,13 @@ public class ProductUseCaseImpl implements ProductUseCase {
     }
 
     @Override
-    public Optional<Product> updateProduct(Long id, Product updateProduct) {
+    public Optional<Product> updateProduct(Product updateProduct) {
         return productRepositoryPort.update(updateProduct);
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public boolean deleteProduct(Long id) {
         productRepositoryPort.deleteById(id);
+        return false;
     }
 }

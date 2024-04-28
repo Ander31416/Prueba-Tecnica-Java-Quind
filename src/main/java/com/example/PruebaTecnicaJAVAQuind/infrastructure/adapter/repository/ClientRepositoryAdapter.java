@@ -21,7 +21,7 @@ public class ClientRepositoryAdapter implements ClientRepositoryPort {
 
     @Override
     public Client save(Client client) {
-        ClientEntity clientEntity = ClientMapper.fromDomainModel(client);
+        ClientEntity clientEntity = clientMapper.fromDomainModel(client);
         ClientEntity savedClientEntity = clientRepository.save(clientEntity);
         return clientMapper.toDomainModel(savedClientEntity);
     }
@@ -41,7 +41,7 @@ public class ClientRepositoryAdapter implements ClientRepositoryPort {
     @Override
     public Optional<Client> update(Client client) {
         if(clientRepository.existsById(client.getIdClient())) {
-            ClientEntity clientEntity = ClientMapper.fromDomainModel(client);
+            ClientEntity clientEntity = clientMapper.fromDomainModel(client);
             ClientEntity updateTaskEntity = clientRepository.save(clientEntity);
             return Optional.of(clientMapper.toDomainModel(updateTaskEntity));
         }

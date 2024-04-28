@@ -10,6 +10,6 @@ public interface ClientUseCase {
     Client createClient(Client client);
     Optional<Client> getClient(Long id);
     List<Client> getAllClients();
-    Optional<Client> updateClient(Long id, Client updateClient);
+    Optional<Client> updateClient(Client updateClient);
     boolean deleteClient(Long id);
 }

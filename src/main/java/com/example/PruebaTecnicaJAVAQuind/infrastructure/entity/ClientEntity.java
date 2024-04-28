@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -18,18 +19,14 @@ import java.time.LocalDateTime;
 public class ClientEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idClient;
     private String idType;
     private int idNumber;
     private String names;
     private String lastNames;
     private String email;
-    //@Temporal(TemporalType.DATE)
-    private LocalDateTime birthDate;
-    //@Temporal(TemporalType.DATE)
+    private Date birthDate;
     private LocalDateTime creationDate;
-    //@Temporal(TemporalType.DATE)
     private LocalDateTime modificationDate;
 
 }

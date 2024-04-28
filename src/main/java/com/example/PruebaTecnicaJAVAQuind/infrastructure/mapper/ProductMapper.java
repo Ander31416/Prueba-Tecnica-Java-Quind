@@ -1,19 +1,26 @@
 package com.example.PruebaTecnicaJAVAQuind.infrastructure.mapper;
 
+import com.example.PruebaTecnicaJAVAQuind.aplication.service.ClientService;
 import com.example.PruebaTecnicaJAVAQuind.domain.model.Product;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.entity.ClientEntity;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.entity.ProductEntity;
-import com.example.PruebaTecnicaJAVAQuind.infrastructure.repository.ClientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductMapper extends ProductEntity {
+public class ProductMapper{
 
-    private static ClientRepository clientRepository;
+    private static ClientService clientService;
     private static ClientMapper clientMapper;
 
+    @Autowired
+    public ProductMapper(ClientService clientService, ClientMapper clientMapper) {
+        this.clientService = clientService;
+        this.clientMapper = clientMapper;
+    }
+
     public static ProductEntity fromDomainModel(Product product){
-        ClientEntity clientEntity = clientRepository.findById(product.getIdClient())
+        ClientEntity clientEntity = clientService.getClient(product.getIdClient()).map(clientMapper::fromDomainModel)
                 .orElse(null);
 
         return new ProductEntity(product.getIdProduct(), product.getAccountType(), product.getAccountNumber(),

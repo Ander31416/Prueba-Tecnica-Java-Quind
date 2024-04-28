@@ -24,7 +24,7 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idProduct;
     private String accountType;
-    private int accountNumber;
+    private long accountNumber;
     private String state;
     private int balance;
     private boolean exemptGMF;

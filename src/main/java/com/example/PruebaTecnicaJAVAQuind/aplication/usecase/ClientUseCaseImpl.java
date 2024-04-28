@@ -29,7 +29,7 @@ public class ClientUseCaseImpl implements ClientUseCase {
     }
 
     @Override
-    public Optional<Client> updateClient(Long id, Client updateClient) {
+    public Optional<Client> updateClient(Client updateClient) {
         return clientRepositoryPort.update(updateClient);
     }
 

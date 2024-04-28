@@ -10,6 +10,8 @@ import com.example.PruebaTecnicaJAVAQuind.domain.port.out.ProductRepositoryPort;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.adapter.ExternalServiceAdapter;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.adapter.repository.ClientRepositoryAdapter;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.adapter.repository.ProductRepositoryAdapter;
+import com.example.PruebaTecnicaJAVAQuind.infrastructure.mapper.ClientMapper;
+import com.example.PruebaTecnicaJAVAQuind.infrastructure.mapper.ProductMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,9 +26,11 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public ProductService productService(ProductRepositoryPort productRepositoryPort){
+    public ProductService productService(ProductRepositoryPort productRepositoryPort,
+                                         ClientRepositoryPort clientRepositoryPort){
         return new ProductService(
-                new ProductUseCaseImpl(productRepositoryPort)
+                new ProductUseCaseImpl(productRepositoryPort),
+                new ClientUseCaseImpl(clientRepositoryPort)
         );
     }
 
@@ -43,6 +47,12 @@ public class ApplicationConfig {
     @Bean
     public ExternalServicePort externalServicePort() {
         return new ExternalServiceAdapter();
+    }
+
+    @Bean
+    public ProductMapper productMapper(ClientService clientService,
+                                       ClientMapper clientMapper){
+        return new ProductMapper(clientService, clientMapper);
     }
 
 }
