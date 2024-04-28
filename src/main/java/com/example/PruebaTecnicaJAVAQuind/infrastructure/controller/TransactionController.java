@@ -3,7 +3,7 @@ package com.example.PruebaTecnicaJAVAQuind.infrastructure.controller;
 import com.example.PruebaTecnicaJAVAQuind.aplication.service.ProductService;
 import com.example.PruebaTecnicaJAVAQuind.domain.model.Product;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.ConsignationInput;
-import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.TranceferenceInput;
+import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.TransferenceInput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionOutput.TransferenceOutput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.WithdrawalInput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.mapperToProduct.MapperToProduct;
@@ -54,9 +54,9 @@ public class TransactionController {
 
     @PutMapping
     @RequestMapping("/transferencia")
-    public ResponseEntity<Object> Transference(@RequestBody TranceferenceInput tranceferenceInput){
+    public ResponseEntity<Object> Transference(@RequestBody TransferenceInput transferenceInput){
         try{
-            Map<String, Product> products = mapperToProduct.transferenceToProductMapper(tranceferenceInput);
+            Map<String, Product> products = mapperToProduct.transferenceToProductMapper(transferenceInput);
             TransferenceOutput transferenceOutput = new TransferenceOutput();
 
             productService.productIsCorrect(products.get("receivingProduct"));

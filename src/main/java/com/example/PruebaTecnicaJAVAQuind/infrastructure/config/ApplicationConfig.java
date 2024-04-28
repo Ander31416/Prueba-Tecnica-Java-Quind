@@ -5,9 +5,7 @@ import com.example.PruebaTecnicaJAVAQuind.aplication.service.ProductService;
 import com.example.PruebaTecnicaJAVAQuind.aplication.usecase.ClientUseCaseImpl;
 import com.example.PruebaTecnicaJAVAQuind.aplication.usecase.ProductUseCaseImpl;
 import com.example.PruebaTecnicaJAVAQuind.domain.port.out.ClientRepositoryPort;
-import com.example.PruebaTecnicaJAVAQuind.domain.port.out.ExternalServicePort;
 import com.example.PruebaTecnicaJAVAQuind.domain.port.out.ProductRepositoryPort;
-import com.example.PruebaTecnicaJAVAQuind.infrastructure.adapter.ExternalServiceAdapter;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.adapter.repository.ClientRepositoryAdapter;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.adapter.repository.ProductRepositoryAdapter;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.mapper.ClientMapper;
@@ -42,11 +40,6 @@ public class ApplicationConfig {
     @Bean
     public ProductRepositoryPort productRepositoryPort(ProductRepositoryAdapter productRepositoryAdapter){
         return productRepositoryAdapter;
-    }
-
-    @Bean
-    public ExternalServicePort externalServicePort() {
-        return new ExternalServiceAdapter();
     }
 
     @Bean

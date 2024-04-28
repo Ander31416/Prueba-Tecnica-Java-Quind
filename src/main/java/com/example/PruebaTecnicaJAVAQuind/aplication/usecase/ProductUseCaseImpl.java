@@ -35,7 +35,6 @@ public class ProductUseCaseImpl implements ProductUseCase {
 
     @Override
     public boolean deleteProduct(Long id) {
-        productRepositoryPort.deleteById(id);
-        return false;
+        return productRepositoryPort.deleteById(id);
     }
 }

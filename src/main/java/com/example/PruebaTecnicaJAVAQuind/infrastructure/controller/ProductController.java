@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/product")
@@ -18,41 +16,47 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody ProductInput productInput){
-        Product product = productService.toDomainModel(productInput);
+    public ResponseEntity<Object> createProduct(@RequestBody ProductInput productInput){
+        try{
+            Product product = productService.toDomainModel(productInput);
 
-        Product createdProduct = productService.createProduct(product);
-        return new ResponseEntity<>(createdProduct, HttpStatus.OK);
+            Product createdProduct = productService.createProduct(product);
+            return new ResponseEntity<>(createdProduct, HttpStatus.OK);
+        } catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
-    @GetMapping("/{clientId}")
+    @GetMapping("/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
         return productService.getProduct(productId)
                 .map(client -> new ResponseEntity<>(client, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts(){
-        List<Product> product = productService.getAllProducts();
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    @PutMapping
+    public ResponseEntity<Object> updateProduct(@RequestBody ProductInput productInput){
+        try{
+            Product updateProduct = productService.toDomainModel(productInput);
+
+            return productService.updateProduct(updateProduct)
+                    .map(product -> new ResponseEntity<>((Object) product, HttpStatus.OK))
+                    .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        } catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
-    @PutMapping("/{clientId}")
-    public ResponseEntity<Product> updateProduct(@RequestBody ProductInput productInput){
-        Product updateProduct = productService.toDomainModel(productInput);
-
-        return productService.updateProduct(updateProduct)
-                .map(task -> new ResponseEntity<>(task, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @DeleteMapping("/{taskId}")
+    @DeleteMapping("/{productId}")
     public ResponseEntity<Object> deleteProductById(@PathVariable Long productId) {
-        if (productService.deleteProduct(productId)) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try{
+            if (productService.deleteProduct(productId)) {
+                return new ResponseEntity<>("Producto eliminado correctamente", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
 }

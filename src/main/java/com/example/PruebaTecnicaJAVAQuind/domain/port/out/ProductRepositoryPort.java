@@ -13,5 +13,5 @@ public interface ProductRepositoryPort {
     List<Product> findAllByIdClient(Long idClient);
 
     Optional<Product> update(Product product);
-    void deleteById(Long id);
+    boolean deleteById(Long id);
 }

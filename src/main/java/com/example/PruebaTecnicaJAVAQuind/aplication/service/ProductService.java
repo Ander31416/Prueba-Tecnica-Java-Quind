@@ -5,16 +5,12 @@ import com.example.PruebaTecnicaJAVAQuind.domain.model.Product;
 import com.example.PruebaTecnicaJAVAQuind.domain.port.in.ClientUseCase;
 import com.example.PruebaTecnicaJAVAQuind.domain.port.in.ProductUseCase;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.error.CustomException;
-import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.ClientInput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.ProductInput;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
+import java.util.*;
 
 @AllArgsConstructor
 public class ProductService implements ProductUseCase {
@@ -43,6 +39,56 @@ public class ProductService implements ProductUseCase {
 
     @Override
     public Product createProduct(Product product) {
+        productIsCorrect(product);
+        return productUseCase.createProduct(product);
+    }
+
+    @Override
+    public Optional<Product> getProduct(Long id) {
+        return productUseCase.getProduct(id);
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productUseCase.getAllProducts();
+    }
+
+    @Override
+    public Optional<Product> updateProduct(Product updateProduct) {
+        updateProduct.setModificationDate(LocalDateTime.now());
+        return Optional.ofNullable(this.createProduct(updateProduct));
+    }
+
+    @Override
+    public boolean deleteProduct(Long id) {
+        return productUseCase.deleteProduct(id);
+    }
+
+    public boolean deleteClientById(Long id) {
+        List<Product> productsByIdClient = this.getProductsByIdClient(id);
+
+        if(productsByIdClient == null){
+            return clientUseCase.deleteClient(id);
+        }
+
+        List<Product> uncanceledProducts = productsByIdClient.stream()
+                .filter(product -> !Objects.equals(product.getState(), "cancelada"))
+                .toList();
+
+        if(uncanceledProducts.isEmpty()){
+            return clientUseCase.deleteClient(id);
+        }
+
+        throw new CustomException(HttpStatus.FORBIDDEN, "El cliente no puede ser eliminado si tiene cuentas disponibles");
+    }
+
+    public List<Product> getProductsByIdClient(long idClient){
+        return productUseCase.getAllProducts().stream()
+                .filter(product -> product.getIdClient() == idClient)
+                .toList();
+    }
+
+    public boolean productIsCorrect(Product product){
         List<String> AccountTypes = Arrays.asList("cuenta corriente","cuenta de ahorros");
 
         if(!AccountTypes.contains(product.getAccountType().toLowerCase())){
@@ -56,8 +102,8 @@ public class ProductService implements ProductUseCase {
             throw new CustomException(HttpStatus.FORBIDDEN, "El producto a crear no tiene ningun cliente relacionado");
         }
 
-        if(product.getAccountType() == "cuenta de ahorros" && product.getBalance() < 0){
-            throw new CustomException(HttpStatus.FORBIDDEN, "El saldo no puede ser menor a 0");
+        if(product.getAccountType().toLowerCase().equals("cuenta de ahorros") && product.getBalance() < 0){
+            throw new CustomException(HttpStatus.FORBIDDEN, "Para una cuenta de ahorros el saldo no puede ser menor a 0");
         }
 
         if(String.valueOf(product.getAccountNumber()).length() != 10){
@@ -81,26 +127,6 @@ public class ProductService implements ProductUseCase {
                     "que el saldo sea igual a 0");
         }
 
-        return productUseCase.createProduct(product);
-    }
-
-    @Override
-    public Optional<Product> getProduct(Long id) {
-        return productUseCase.getProduct(id);
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        return productUseCase.getAllProducts();
-    }
-
-    @Override
-    public Optional<Product> updateProduct(Product updateProduct) {
-        return productUseCase.updateProduct(updateProduct);
-    }
-
-    @Override
-    public boolean deleteProduct(Long id) {
-        return productUseCase.deleteProduct(id);
+        return true;
     }
 }

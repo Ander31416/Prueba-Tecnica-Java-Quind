@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WithdrawalInput {
+public class ConsignationInput {
     private long idProduct;
     private long cash;
 }

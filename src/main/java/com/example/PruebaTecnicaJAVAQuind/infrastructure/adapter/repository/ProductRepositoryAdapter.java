@@ -58,9 +58,11 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         if(productRepository.existsById(id)) {
             productRepository.deleteById(id);
+            return true;
         }
+        return false;
     }
 }

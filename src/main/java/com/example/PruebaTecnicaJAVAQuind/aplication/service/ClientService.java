@@ -88,7 +88,6 @@ public class ClientService implements ClientUseCase {
 
     @Override
     public boolean deleteClient(Long id) {
-
         return clientUseCase.deleteClient(id);
     }
 }

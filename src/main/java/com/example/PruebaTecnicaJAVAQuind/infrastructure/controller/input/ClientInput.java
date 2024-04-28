@@ -1,20 +1,15 @@
 package com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input;
 
-import com.example.PruebaTecnicaJAVAQuind.aplication.usecase.ClientUseCaseImpl;
-import com.example.PruebaTecnicaJAVAQuind.domain.model.Client;
-import com.example.PruebaTecnicaJAVAQuind.domain.port.in.ClientUseCase;
-import com.example.PruebaTecnicaJAVAQuind.infrastructure.adapter.repository.ClientRepositoryAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Objects;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class ClientInput{
     private long idClient;

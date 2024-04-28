@@ -3,7 +3,7 @@ package com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Trans
 import com.example.PruebaTecnicaJAVAQuind.domain.model.Product;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.error.CustomException;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.ConsignationInput;
-import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.TranceferenceInput;
+import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.TransferenceInput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.WithdrawalInput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.mapper.ProductMapper;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.repository.ProductRepository;
@@ -39,7 +39,7 @@ public class MapperToProduct {
         return product;
     }
 
-    public Map<String, Product> transferenceToProductMapper(TranceferenceInput tranceferenceInput){
+    public Map<String, Product> transferenceToProductMapper(TransferenceInput tranceferenceInput){
         Map<String, Product> transferenceProducts = new HashMap<>();
 
         Product receivingProduct = productRepository.findById(tranceferenceInput.getIdProductReceivingAccount())
