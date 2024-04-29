@@ -2,16 +2,12 @@ package com.example.PruebaTecnicaJAVAQuind.infrastructure.mapper;
 
 import com.example.PruebaTecnicaJAVAQuind.domain.model.Client;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.entity.ClientEntity;
-import com.example.PruebaTecnicaJAVAQuind.infrastructure.utils.UtilsClient;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 public class ClientMapper {
-
-    private final UtilsClient utilsClient;
 
     public ClientEntity fromDomainModel(Client client){
 
