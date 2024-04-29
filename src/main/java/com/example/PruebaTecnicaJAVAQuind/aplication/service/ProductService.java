@@ -61,6 +61,13 @@ public class ProductService implements ProductUseCase {
 
     @Override
     public boolean deleteProduct(Long id) {
+        if(productUseCase.getProduct(id).isPresent()){
+            if(Objects.requireNonNull(productUseCase.getProduct(id).orElse(null)).getBalance() != 0){
+                throw new CustomException(HttpStatus.FORBIDDEN, "Para ser eliminada la cuenta este debe tener un " +
+                        "saldo igual a 0");
+            }
+        }
+
         return productUseCase.deleteProduct(id);
     }
 
@@ -105,6 +112,11 @@ public class ProductService implements ProductUseCase {
         if(!States.contains(product.getState().toLowerCase())){
             throw new CustomException(HttpStatus.FORBIDDEN, "Solo los estados de producto 'activa'" +
                     ", 'inactiva' y 'cancelada' son permitidos");
+        }
+
+        if(product.getState() == "cancelada" && product.getBalance() != 0){
+            throw new CustomException(HttpStatus.FORBIDDEN, "La cuenta deberá tener un saldo igual a 0 para que" +
+                    " esta pueda ser cancelada");
         }
 
         Client clientOfProduct = clientUseCase.getClient(product.getIdClient()).orElse(null);
