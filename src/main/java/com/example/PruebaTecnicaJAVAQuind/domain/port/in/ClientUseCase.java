@@ -1,7 +1,6 @@
 package com.example.PruebaTecnicaJAVAQuind.domain.port.in;
 
 import com.example.PruebaTecnicaJAVAQuind.domain.model.Client;
-import org.springframework.scheduling.config.Task;
 
 import java.util.List;
 import java.util.Optional;

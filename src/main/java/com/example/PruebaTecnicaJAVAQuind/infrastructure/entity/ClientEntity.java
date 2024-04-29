@@ -1,6 +1,5 @@
 package com.example.PruebaTecnicaJAVAQuind.infrastructure.entity;
 
-import com.example.PruebaTecnicaJAVAQuind.domain.model.Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

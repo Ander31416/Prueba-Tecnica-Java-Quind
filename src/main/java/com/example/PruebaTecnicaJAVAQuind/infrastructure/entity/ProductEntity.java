@@ -1,14 +1,10 @@
 package com.example.PruebaTecnicaJAVAQuind.infrastructure.entity;
 
-import com.example.PruebaTecnicaJAVAQuind.domain.model.Client;
-import com.example.PruebaTecnicaJAVAQuind.domain.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +17,6 @@ import java.time.LocalDateTime;
 public class ProductEntity {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idProduct;
     private String accountType;
     private long accountNumber;

@@ -3,7 +3,6 @@ package com.example.Prueba.Tecnica.JAVA.controller;
 import com.example.PruebaTecnicaJAVAQuind.aplication.service.ProductService;
 import com.example.PruebaTecnicaJAVAQuind.domain.model.Client;
 import com.example.PruebaTecnicaJAVAQuind.domain.model.Product;
-import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.ProductController;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.TransactionController;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.ClientInput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.ProductInput;
@@ -11,7 +10,6 @@ import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transa
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.TransferenceInput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.WithdrawalInput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.Transaction.TransactionInput.mapperToProduct.MapperToProduct;
-import jakarta.transaction.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

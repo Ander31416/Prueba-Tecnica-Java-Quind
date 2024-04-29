@@ -13,6 +13,8 @@ import java.time.Period;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @AllArgsConstructor
@@ -46,11 +48,39 @@ public class ClientService implements ClientUseCase {
         return period.getYears();
     }
 
+    public static boolean isValidEmail(String email) {
+        // Regular expression for validating email addresses
+        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
+        // Compile the regular expression pattern
+        Pattern pattern = Pattern.compile(regex);
+
+        // Create a Matcher object to match the input email with the pattern
+        Matcher matcher = pattern.matcher(email);
+
+        // Return true if the email matches the pattern, otherwise false
+        return matcher.matches();
+    }
+
     @Override
     public Client createClient(Client client) {
 
         if(calculateAge(client.getBirthDate()) < 18){
             throw new CustomException(HttpStatus.FORBIDDEN, "Menores de edad no permitidos");
+        }
+
+        if(!isValidEmail(client.getEmail())){
+            throw new CustomException(HttpStatus.FORBIDDEN, "Formato de email incorrecto");
+        }
+
+        if(client.getNames().length() < 2){
+            throw new CustomException(HttpStatus.FORBIDDEN, "campos 'nombres' y 'apellidos' no pueden " +
+                    "tener menos de 2 caracteres");
+        }
+
+        if(client.getLastNames().length() < 2){
+            throw new CustomException(HttpStatus.FORBIDDEN, "campos 'nombres' y 'apellidos' no pueden " +
+                    "tener menos de 2 caracteres");
         }
 
         Client clientIfExist = clientUseCase.getClient(client.getIdClient()).orElse(null);
@@ -79,6 +109,20 @@ public class ClientService implements ClientUseCase {
     public Optional<Client> updateClient(Client updateClient) {
         if(calculateAge(updateClient.getBirthDate()) < 18){
             throw new CustomException(HttpStatus.FORBIDDEN, "Menores de edad no permitidos");
+        }
+
+        if(!isValidEmail(updateClient.getEmail())){
+            throw new CustomException(HttpStatus.FORBIDDEN, "Formato de email incorrecto");
+        }
+
+        if(updateClient.getNames().length() < 2){
+            throw new CustomException(HttpStatus.FORBIDDEN, "campos 'nombres' y 'apellidos' no pueden " +
+                    "tener menos de 2 caracteres");
+        }
+
+        if(updateClient.getLastNames().length() < 2){
+            throw new CustomException(HttpStatus.FORBIDDEN, "campos 'nombres' y 'apellidos' no pueden " +
+                    "tener menos de 2 caracteres");
         }
 
         updateClient.setModificationDate(LocalDateTime.now());

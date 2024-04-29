@@ -171,9 +171,28 @@ public class ClientServiceTest {
 
         assertEquals(wasDeleted, true);
     }
-    
-    @Test
-    void deleteClientById(){
 
+    @Test
+    void isValidEmail(){
+        String email = "hola@gmail.com";
+
+        boolean result = ClientService.isValidEmail(email);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void isNotValidEmail(){
+        String email1 = "holagmail.com";
+        String email2 = "hola@gmail";
+        String email3 = "@gmail.com";
+
+        boolean result1 = ClientService.isValidEmail(email1);
+        boolean result2 = ClientService.isValidEmail(email2);
+        boolean result3 = ClientService.isValidEmail(email3);
+
+        assertFalse(result1);
+        assertFalse(result2);
+        assertFalse(result3);
     }
 }

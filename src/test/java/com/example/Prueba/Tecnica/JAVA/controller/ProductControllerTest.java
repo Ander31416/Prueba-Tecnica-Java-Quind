@@ -3,7 +3,6 @@ package com.example.Prueba.Tecnica.JAVA.controller;
 import com.example.PruebaTecnicaJAVAQuind.aplication.service.ProductService;
 import com.example.PruebaTecnicaJAVAQuind.domain.model.Client;
 import com.example.PruebaTecnicaJAVAQuind.domain.model.Product;
-import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.ClientController;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.ProductController;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.ClientInput;
 import com.example.PruebaTecnicaJAVAQuind.infrastructure.controller.input.ProductInput;

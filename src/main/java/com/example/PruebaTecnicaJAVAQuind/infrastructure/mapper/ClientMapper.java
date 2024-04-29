@@ -12,8 +12,8 @@ public class ClientMapper {
     public ClientEntity fromDomainModel(Client client){
 
         return new ClientEntity(client.getIdClient(), client.getIdType(), client.getIdNumber(), client.getNames(),
-                client.getLastNames(), client.getEmail(), client.getBirthDate(), client.getCreationDate()/*utilsClient.getCreationDate(client)*/,
-                client.getModificationDate()/*utilsClient.getModificationDate(client)*/);
+                client.getLastNames(), client.getEmail(), client.getBirthDate(), client.getCreationDate(),
+                client.getModificationDate());
     }
 
     public Client toDomainModel(ClientEntity clientEntity){
