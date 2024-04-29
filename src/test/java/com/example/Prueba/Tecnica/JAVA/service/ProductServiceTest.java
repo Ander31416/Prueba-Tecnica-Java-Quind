@@ -194,7 +194,7 @@ public class ProductServiceTest {
     void productIsCorrect(){
         when(clientUseCase.getClient(1L)).thenReturn(Optional.ofNullable(client));
 
-        Boolean result = productService.productIsCorrect(product);
+        Boolean result = productService.productIsCorrect(product, false);
 
         assertEquals(result, true);
     }

@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 public class ProductEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idProduct;
     private String accountType;
     private long accountNumber;

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class MapperToProduct {
@@ -32,6 +33,10 @@ public class MapperToProduct {
 
         if(product == null){
             throw new CustomException(HttpStatus.BAD_REQUEST, "Producto no encontrado");
+        }
+
+        if(Objects.equals(product.getState(), "inactiva") || Objects.equals(product.getState(), "cancelada")){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "cuenta inactiva o cancelada");
         }
 
         product.setBalance((int) (product.getBalance()+consignationInput.getCash()));
@@ -56,6 +61,14 @@ public class MapperToProduct {
             throw new CustomException(HttpStatus.BAD_REQUEST, "cuenta de envío no encontrada");
         }
 
+        if(Objects.equals(receivingProduct.getState(), "inactiva") || Objects.equals(receivingProduct.getState(), "cancelada")){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "cuenta inactiva o cancelada");
+        }
+
+        if(Objects.equals(shippingProduct.getState(), "inactiva") || Objects.equals(shippingProduct.getState(), "cancelada")){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "cuenta inactiva o cancelada");
+        }
+
         receivingProduct.setBalance((int) (receivingProduct.getBalance()+tranceferenceInput.getCash()));
         shippingProduct.setBalance((int) (shippingProduct.getBalance()-tranceferenceInput.getCash()));
 
@@ -71,6 +84,10 @@ public class MapperToProduct {
 
         if(product == null){
             throw new CustomException(HttpStatus.BAD_REQUEST, "Producto no encontrado");
+        }
+
+        if(Objects.equals(product.getState(), "inactiva") || Objects.equals(product.getState(), "cancelada")){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "cuenta inactiva o cancelada");
         }
 
         product.setBalance((int) (product.getBalance()-withdrawalInput.getCash()));

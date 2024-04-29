@@ -28,7 +28,7 @@ public class ProductService implements ProductUseCase {
         if(product != null){
             creationDate = product.getCreationDate();
             modificationDate = product.getModificationDate();
-            state = product.getState();
+            state = productInput.getState();
             balance = product.getBalance();
         }
 
@@ -39,7 +39,7 @@ public class ProductService implements ProductUseCase {
 
     @Override
     public Product createProduct(Product product) {
-        productIsCorrect(product);
+        productIsCorrect(product, false);
         return productUseCase.createProduct(product);
     }
 
@@ -56,7 +56,7 @@ public class ProductService implements ProductUseCase {
     @Override
     public Optional<Product> updateProduct(Product updateProduct) {
         updateProduct.setModificationDate(LocalDateTime.now());
-        return Optional.ofNullable(this.createProduct(updateProduct));
+        return Optional.ofNullable(this.createProduct(updateProduct, true));
     }
 
     @Override
@@ -88,12 +88,23 @@ public class ProductService implements ProductUseCase {
                 .toList();
     }
 
-    public boolean productIsCorrect(Product product){
+    public Product createProduct(Product product, boolean isUpdating) {
+        productIsCorrect(product, isUpdating);
+        return productUseCase.createProduct(product);
+    }
+
+    public boolean productIsCorrect(Product product, boolean isUpdating){
         List<String> AccountTypes = Arrays.asList("cuenta corriente","cuenta de ahorros");
+        List<String> States = Arrays.asList("activa","inactiva","cancelada");
 
         if(!AccountTypes.contains(product.getAccountType().toLowerCase())){
             throw new CustomException(HttpStatus.FORBIDDEN, "Solo los productos 'cuenta corriente' y " +
                     "'cuenta de ahorros' son permitidos");
+        }
+
+        if(!States.contains(product.getState().toLowerCase())){
+            throw new CustomException(HttpStatus.FORBIDDEN, "Solo los estados de producto 'activa'" +
+                    ", 'inactiva' y 'cancelada' son permitidos");
         }
 
         Client clientOfProduct = clientUseCase.getClient(product.getIdClient()).orElse(null);
@@ -125,6 +136,20 @@ public class ProductService implements ProductUseCase {
         if(product.getState().toLowerCase().equals("cancelada") && product.getBalance() != 0){
             throw new CustomException(HttpStatus.FORBIDDEN, "Para que una cuenta se encuentre cancelada en necesario " +
                     "que el saldo sea igual a 0");
+        }
+
+        if(!isUpdating){
+            List<Product> productsOfClient = this.getProductsByIdClient(clientOfProduct.getIdClient());
+
+            if(productsOfClient.isEmpty()){
+                return true;
+            }
+
+            for(Product p : productsOfClient){
+                if(Objects.equals(p.getAccountType(), product.getAccountType())){
+                    throw new CustomException(HttpStatus.FORBIDDEN, "El cliente ya posee una "+p.getAccountType());
+                }
+            }
         }
 
         return true;

@@ -59,8 +59,8 @@ public class TransactionController {
             Map<String, Product> products = mapperToProduct.transferenceToProductMapper(transferenceInput);
             TransferenceOutput transferenceOutput = new TransferenceOutput();
 
-            productService.productIsCorrect(products.get("receivingProduct"));
-            productService.productIsCorrect(products.get("shippingProduct"));
+            productService.productIsCorrect(products.get("receivingProduct"), true);
+            productService.productIsCorrect(products.get("shippingProduct"), true);
 
             Product updatedReceivingProduct = productService.updateProduct(products.get("receivingProduct")).orElse(null);
             Product updatedShippingProduct = productService.updateProduct(products.get("shippingProduct")).orElse(null);

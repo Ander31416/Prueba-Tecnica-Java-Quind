@@ -81,7 +81,7 @@ public class TransactionControllerTest {
     @Test
     void transference(){
         when(mapperToProduct.transferenceToProductMapper(transferenceInput)).thenReturn(productsMap);
-        when(productService.productIsCorrect(product)).thenReturn(true);
+        when(productService.productIsCorrect(product, true)).thenReturn(true);
         when(productService.updateProduct(product)).thenReturn(Optional.ofNullable(product));
 
         ResponseEntity<Object> result = transactionController.Transference(transferenceInput);
